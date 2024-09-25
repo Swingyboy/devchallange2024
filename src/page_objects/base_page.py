@@ -1,1 +1,48 @@
 from playwright.async_api import Page
+import typing
+from src.page_objects.side_menu import SideMenu
+from src.page_objects.header import Header
+from src.page_objects.footer import Footer
+from src.page_locators import BASE_PAGE_LOCATORS
+
+
+class BasePage:
+    def __init__(self, page: Page):
+        self._page = page
+        self._locators = BASE_PAGE_LOCATORS
+        self._hamburger_menu = self._page.locator(self._locators["hamburger_menu"]).first
+        self._header = Header(self._page)
+        self._footer = Footer(self._page)
+
+    async def goto(self, url: str, timeout: typing.Optional[float] = None, wait_until: typing.Optional[str] = None):
+        await self._page.goto(url, timeout=timeout, wait_until=wait_until)
+
+    async def open_side_hamburger_menu(self) -> SideMenu:
+        await self._hamburger_menu.click(force=True)
+        return SideMenu(self._page)
+
+    async def sroll_to_bottom(self) -> None:
+        await self._page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
+
+    async def sroll_to_top(self) -> None:
+        await self._page.evaluate("window.scrollTo(0, 0);")
+
+    async def scroll_to_header(self) -> None:
+        await self._header.scroll_to_logo()
+
+    async def scroll_to_footer(self) -> None:
+        await self._footer.scroll_to_contacts()
+
+    async def get_footer_contact(self) -> str:
+        return await self._footer.get_contact()
+
+    async def sroll_to_element(self, element_name: str) -> None:
+        element_name = self._locators.get(element_name)
+        if element_name:
+            element = self._page.locator(element_name).first
+            await element.scroll_into_view_if_needed()
+        else:
+            raise ValueError(f"Element {element_name} not found on the page")
+
+    async def wait_for_n_seconds(self, n: int) -> None:
+        await self._page.wait_for_timeout(n * 1000)
