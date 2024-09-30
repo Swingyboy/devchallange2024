@@ -9,6 +9,8 @@ from main_page_locators import MAIN_PAGE_LOCATORS
 from side_menu_locators import SIDE_MENU_LOCATORS
 from header_locators import HEADER_LOCATORS
 from footer_locators import FOOTER_LOCATORS
+from judges_page_locators import JUDGES_PAGE_LOCATORS
+from partners_page_locators import PARTNERS_PAGE_LOCATORS
 
 
 sys.path.pop()

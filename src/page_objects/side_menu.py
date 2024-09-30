@@ -22,7 +22,11 @@ class SideMenu:
         return MainPage(self._page)
 
     async def open_judges(self):
+        from src.page_objects.judges_page import JudgesPage
         await self._judges.click(force=True)
+        return JudgesPage(self._page)
 
     async def open_partners(self):
+        from src.page_objects.partners_page import PartnersPage
         await self._partners.click(force=True)
+        return PartnersPage(self._page)
