@@ -7,8 +7,9 @@ from src.page_locators.partners_page_locators import PARTNERS_PAGE_LOCATORS
 class PartnersPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
-        self._locators: dict = PARTNERS_PAGE_LOCATORS
+        self._locators.update(PARTNERS_PAGE_LOCATORS)
         self._partners_grid: "locator" = self._page.locator(self._locators["partners_grid"])
+        self._first_screen: "locator" = self._page.locator(self._locators["first_screen"]).first
 
     def check_partner_is_present(self, partner_name: str) -> bool:
         partners: typing.List[typing.Dict[str, typing.Any]] = self.get_partners_list()

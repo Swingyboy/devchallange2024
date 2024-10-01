@@ -5,13 +5,14 @@ from src.page_locators.judges_page_locators import JUDGES_PAGE_LOCATORS
 class JudgesPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
-        self._locators: dict = JUDGES_PAGE_LOCATORS
-        self._back_end_judges: "locator" = self._page.get_by_text(self._locators["backend_judges"]).first
-        self._front_end_judges: "locator" = self._page.get_by_text(self._locators["frontend_judges"]).first
-        self._testing_judges: "locator" = self._page.get_by_text(self._locators["testing_judges"]).first
-        self._product_design_judges: "locator" = self._page.get_by_text(self._locators["product_design_judges"]).first
-        self._ui_design_judges: "locator" = self._page.get_by_text(self._locators["ui_design_judges"]).first
+        self._locators.update(JUDGES_PAGE_LOCATORS)
+        self._back_end_judges: "locator" = self._page.locator(self._locators["backend_judges"]).first
+        self._front_end_judges: "locator" = self._page.locator(self._locators["frontend_judges"]).first
+        self._testing_judges: "locator" = self._page.locator(self._locators["testing_judges"]).first
+        self._product_design_judges: "locator" = self._page.locator(self._locators["product_design_judges"]).first
+        self._ui_design_judges: "locator" = self._page.locator(self._locators["ui_design_judges"]).nth(1)
         self._mac_os_judges: "locator" = self._page.locator(self._locators["mac_os_judges"]).first
+        self._first_screen: "locator" = self._page.locator(self._locators["first_screen"]).first
 
     def check_judges_number(self, judges_number: int, judges_type: str) -> bool:
         if judges_type.lower() == "back_end":

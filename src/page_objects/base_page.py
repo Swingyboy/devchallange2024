@@ -1,4 +1,4 @@
-from playwright.async_api import Page
+from playwright.sync_api import Page
 import typing
 from src.page_objects.side_menu import SideMenu
 from src.page_objects.header import Header
@@ -11,8 +11,13 @@ class BasePage:
         self._page = page
         self._locators = BASE_PAGE_LOCATORS
         self._hamburger_menu = self._page.locator(self._locators["hamburger_menu"]).first
+        self._first_screen = self._page.locator(self._locators["first_screen"]).first
         self._header = Header(self._page)
         self._footer = Footer(self._page)
+
+    def check_first_screen(self, text: str) -> bool:
+        inner_text = self._first_screen.inner_text()
+        return inner_text == text
 
     def get_footer_email(self) -> str:
         email =  self._footer.get_email()
@@ -23,6 +28,7 @@ class BasePage:
         self._page.goto(url, timeout=timeout, wait_until=wait_until)
 
     def open_side_hamburger_menu(self) -> SideMenu:
+        self._hamburger_menu.wait_for(state="visible")
         self._hamburger_menu.click(force=True)
         return SideMenu(self._page)
 

@@ -3,6 +3,7 @@ from pytest_bdd import scenarios, given, when, then
 
 scenarios("../features/about_page.feature")
 
+RETRY = 3
 
 @given("The main page is open")
 def open_website(get_starting_page, test_context):
@@ -16,11 +17,19 @@ def open_side_menu(test_context):
     test_context.side_menu = side_menu
 
 
-@when("User opens the About Pages")
+@when("User opens the About Page")
 def open_about_page(test_context):
     side_menu = test_context.side_menu
     about_page = side_menu.open_about()
-    test_context.about_page = about_page
+    if about_page.check_first_screen("CHALLENGE\nYOURSELF\n& WIN"):
+        test_context.about_page = about_page
+    else:
+        for _ in range(RETRY):
+            about_page = side_menu.open_about()
+            if about_page.check_first_screen("CHALLENGE\nYOURSELF\n& WIN"):
+                test_context.about_page = about_page
+                break
+        raise AssertionError("First screen text is not equal to expected")
 
 
 @when("User scrolls down to the bottom of the page")

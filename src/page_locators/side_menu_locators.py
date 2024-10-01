@@ -1,6 +1,6 @@
 SIDE_MENU_LOCATORS = {
-    "title": "DEV Challenge",
-    "about": "About",
-    "judges": "Judges",
-    "partners": "Partners"
+    "title": 'a[href="/"]',
+    "about": 'a[href="/"]',
+    "judges": 'a[href="/judges"]',
+    "partners": 'a[href="/partners"]'
 }
