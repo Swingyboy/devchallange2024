@@ -10,6 +10,7 @@ load_dotenv(override=False)
 BROWSER_TYPE = os.getenv('BROWSER_TYPE', 'chromium')
 BASE_URL = os.getenv('BASE_URL', None)
 PLATFORM = os.getenv('PLATFORM', None)
+HEADLESS = os.getenv('HEADLESS', False)
 
 
 @pytest.fixture
@@ -39,7 +40,7 @@ def set_platform_context() -> dict:
 def get_browser(set_platform_context):
     context_args = set_platform_context
     maximazed = context_args.pop("maximized")
-    browser = BrowserFactory.create_browser(base_url=BASE_URL, browser_type=BROWSER_TYPE, headless=False,
+    browser = BrowserFactory.create_browser(base_url=BASE_URL, browser_type=BROWSER_TYPE, headless=HEADLESS,
                                             maximized=maximazed)
     page = browser.start(**context_args)
     yield page

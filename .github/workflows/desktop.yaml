@@ -43,6 +43,7 @@ jobs:
           echo "BROWSER_TYPE=${{ github.event.inputs.browser_type }}" >> $GITHUB_ENV
           echo "BASE_URL=${{ github.event.inputs.base_url }}" >> $GITHUB_ENV
           echo "PLATFORM=desktop" >> $GITHUB_ENV
+          echo "HEADLESS=true" >> $GITHUB_ENV
 
       - name: Run tests
         run: |
