@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       browser_type:
-        description: 'Browser Type (e.g., chrome, firefox)'
+        description: 'Select the browser type'
         required: true
-        default: 'firefox'  # Default value
+        default: 'chromium'  # Default value
+        options:
+          - chromium
+          - firefox
+          - webkit
       base_url:
         description: 'Base URL for testing'
         required: true
@@ -38,11 +42,11 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -s -v -m $PLATFORM
+          pytest -s -v -m $PLATFORM  # Run tests for mobile
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: mobile-test-results
-          path: .
+          path: .  # Adjust to your test results path if necessary

@@ -4,13 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       browser_type:
-        description: 'Browser Type (e.g., chrome, firefox)'
+        description: 'Select the browser type'
         required: true
-        default: 'chrome'  # Default value
+        default: 'chromium'  # Default value
+        options:
+          - chromium
+          - firefox
+          - webkit
       base_url:
         description: 'Base URL for testing'
         required: true
-        default: 'https://www.devchallenge.it/'  # Default value
+        default: 'https://www.devchallenge.it/' # Default value
 
 jobs:
   test:
@@ -42,7 +46,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: desktop-test-results
           path: .  # Adjust to your test results path if necessary
