@@ -53,5 +53,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4  # Updated to v4
         with:
-          name: mobile-test-results
-          path: .  # Adjust to your test results path if necessary
+          name: desktop-test-results
+          path: report.html  # Adjust to your test results path if necessary
