@@ -54,4 +54,4 @@ jobs:
         uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: desktop-test-results
-          path: report.html  # Adjust to your test results path if necessary
+          path: ./reports/report.html
