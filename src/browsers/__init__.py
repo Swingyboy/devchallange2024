@@ -6,5 +6,3 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from _browsers import BrowserFactory, ChromiumBrowser, FirefoxBrowser, WebKitBrowser
 
-sys.path.pop()
-sys.path.pop()

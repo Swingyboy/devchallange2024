@@ -12,6 +12,3 @@ from footer_locators import FOOTER_LOCATORS
 from judges_page_locators import JUDGES_PAGE_LOCATORS
 from partners_page_locators import PARTNERS_PAGE_LOCATORS
 
-
-sys.path.pop()
-sys.path.pop()
