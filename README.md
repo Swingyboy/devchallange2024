@@ -13,7 +13,7 @@ Before running the tests, ensure the following environment variables are exporte
     export BASE_URL=https://www.google.com
     ```
 where:
-- `BROWSER_TYPE` is the browser type to use (e.g., `chromium`, `firefox`, `webkit`)
+- `BROWSER_TYPE` is the browser type to use (e.g., `chromium`, `firefox`)
 - `HEADLESS` is a boolean value to run the browser in headless mode
 - `PLATFORM` is the platform to run the tests on (e.g., `desktop`, `mobile`)
 - `BASE_URL` is the base URL of the web application to test
