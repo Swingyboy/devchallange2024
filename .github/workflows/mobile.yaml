@@ -34,6 +34,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt  # Make sure you have a requirements.txt file
 
+      - name: Install Playwright browsers
+        run: |
+          playwright install  # Download the necessary browser binaries
+
       - name: Set environment variables for Mobile
         run: |
           echo "BROWSER_TYPE=${{ github.event.inputs.browser_type }}" >> $GITHUB_ENV
