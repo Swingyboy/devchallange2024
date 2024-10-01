@@ -1,0 +1,48 @@
+name: Mobile CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      browser_type:
+        description: 'Browser Type (e.g., chrome, firefox)'
+        required: true
+        default: 'firefox'  # Default value
+      base_url:
+        description: 'Base URL for testing'
+        required: true
+        default: 'https://www.devchallenge.it/'  # Default value
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # The runner environment
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'  # Specify your desired Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Make sure you have a requirements.txt file
+
+      - name: Set environment variables for Mobile
+        run: |
+          echo "BROWSER_TYPE=${{ github.event.inputs.browser_type }}" >> $GITHUB_ENV
+          echo "BASE_URL=${{ github.event.inputs.base_url }}" >> $GITHUB_ENV
+          echo "PLATFORM=mobile" >> $GITHUB_ENV
+
+      - name: Run tests
+        run: |
+          pytest -s -v -m $PLATFORM
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: mobile-test-results
+          path: .
