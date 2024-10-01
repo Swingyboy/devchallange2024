@@ -1,4 +1,4 @@
-from playwright.async_api import Page, expect
+from playwright.sync_api import Page, expect
 from src.page_locators import BASE_PAGE_LOCATORS, SIDE_MENU_LOCATORS
 
 import typing
@@ -13,20 +13,20 @@ class SideMenu:
         self._judges = self._page.get_by_text(self._locators["judges"]).first
         self._partners = self._page.get_by_text(self._locators["partners"]).first
 
-    async def check_menu_is_opened(self) -> None:
-        await expect(self._title).to_be_visible()
+    def check_menu_is_opened(self) -> None:
+        expect(self._title).to_be_visible()
 
-    async def open_about(self) -> "MainPage":
+    def open_about(self) -> "MainPage":
         from src.page_objects.main_page import MainPage
-        await self._about.click(force=True)
+        self._about.click(force=True)
         return MainPage(self._page)
 
-    async def open_judges(self):
+    def open_judges(self):
         from src.page_objects.judges_page import JudgesPage
-        await self._judges.click(force=True)
+        self._judges.click(force=True)
         return JudgesPage(self._page)
 
-    async def open_partners(self):
+    def open_partners(self):
         from src.page_objects.partners_page import PartnersPage
-        await self._partners.click(force=True)
+        self._partners.click(force=True)
         return PartnersPage(self._page)

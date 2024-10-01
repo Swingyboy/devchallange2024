@@ -8,8 +8,8 @@ class Header:
         self._logo = self._page.locator(self._locators["logo"]).first
         self._register_button = self._page.get_by_role(self._locators["register_button"], name="Register").nth(2)
 
-    async def open_register_page(self):
-        await self._register_button.click(force=True)
+    def open_register_page(self):
+        self._register_button.click(force=True)
 
-    async def scroll_to_logo(self) -> None:
-        await self._logo.scroll_into_view_if_needed()
+    def scroll_to_logo(self) -> None:
+        self._logo.scroll_into_view_if_needed()

@@ -9,17 +9,17 @@ class Footer:
         self._address = self._page.locator(self._locators["address"]).first
         self._email = self._page.locator(self._locators["email"]).first
         
-    async def check_footer_email(self, email: str) -> bool:
-        return await self._email.inner_text() == email
+    def check_footer_email(self, email: str) -> bool:
+        return self._email.inner_text() == email
 
-    async def get_contact(self) -> str:
-        return await self._contact.inner_text()
+    def get_contact(self) -> str:
+        return self._contact.inner_text()
 
-    async def get_address(self) -> str:
-        return await self._address.inner_text()
+    def get_address(self) -> str:
+        return self._address.inner_text()
 
-    async def get_email(self) -> str:
-        return await self._email.inner_text()
+    def get_email(self) -> str:
+        return self._email.inner_text()
 
-    async def scroll_to_contacts(self) -> None:
-        await self._contact.scroll_into_view_if_needed()
+    def scroll_to_contacts(self) -> None:
+        self._contact.scroll_into_view_if_needed()

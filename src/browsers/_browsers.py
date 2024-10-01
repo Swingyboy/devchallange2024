@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
 from typing import Union
 
 from src.page_objects.main_page import MainPage
@@ -15,51 +15,51 @@ class BaseBrowser(ABC):
         self._page = None
 
     @abstractmethod
-    async def _init_browser(self):
-        self._playwright = await async_playwright().start()
+    def _init_browser(self):
+        self._playwright = sync_playwright().start()
 
     @abstractmethod
-    async def start(self):
-        await self._init_browser()
-        self._context = await self._browser.new_context()
-        self._page = await self._context.new_page()
+    def start(self):
+        self._init_browser()
+        self._context = self._browser.new_context()
+        self._page = self._context.new_page()
         if self._base_url:
             self._page = MainPage(self._page)
-            await self._page.goto(self._base_url)
+            self._page.goto(self._base_url)
         return self._page
 
-    async def close(self):
-        await self._browser.close()
-        await self._playwright.stop()
+    def close(self):
+        self._browser.close()
+        self._playwright.stop()
 
 
 class ChromiumBrowser(BaseBrowser):
-    async def _init_browser(self):
-        await super()._init_browser()
-        self._browser = await self._playwright.chromium.launch(headless=self._headless)
+    def _init_browser(self):
+        super()._init_browser()
+        self._browser = self._playwright.chromium.launch(headless=self._headless)
 
-    async def start(self):
-        await super().start()
+    def start(self):
+        super().start()
         return self._page
 
 
 class FirefoxBrowser(BaseBrowser):
-    async def _init_browser(self):
-        await super()._init_browser()
-        self._browser = await self._playwright.firefox.launch(headless=self._headless)
+    def _init_browser(self):
+        super()._init_browser()
+        self._browser = self._playwright.firefox.launch(headless=self._headless)
 
-    async def start(self):
-        await super().start()
+    def start(self):
+        super().start()
         return self._page
 
 
 class WebKitBrowser(BaseBrowser):
-    async def _init_browser(self):
-        await super()._init_browser()
-        self._browser = await self._playwright.webkit.launch(headless=self._headless)
+    def _init_browser(self):
+        super()._init_browser()
+        self._browser = self._playwright.webkit.launch(headless=self._headless)
 
-    async def start(self):
-        await super().start()
+    def start(self):
+        super().start()
         return self._page
 
 
