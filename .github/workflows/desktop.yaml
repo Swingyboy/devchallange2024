@@ -10,7 +10,6 @@ on:
         options:
           - chromium
           - firefox
-          - webkit
       base_url:
         description: 'Base URL for testing'
         required: true
