@@ -36,7 +36,8 @@ def open_judges_page(test_context):
         raise AssertionError("First screen text is not equal to expected")
 
 
-@then("Number of testing judges is 6")
+@then("Number of testing judges is 7")
 def get_testing_judges(test_context):
     judges_page = test_context.judges_page
-    assert judges_page.check_judges_number(6, "testing"), "Number of testing judges is not equal to 6"
+    judges_count = judges_page.get_testing_judges_count()
+    assert judges_count == 7, f"Number of testing judges is {judges_count} instead of 6"

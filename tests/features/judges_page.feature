@@ -5,4 +5,4 @@ Feature: Judges Page feature
     Given The main page is open
     When User opens the side menu
     And User opens the Judges Page
-    Then Number of testing judges is 6
+    Then Number of testing judges is 7

@@ -5,14 +5,11 @@ import pytest
 from src.page_objects import MainPage
 from src.browsers import BrowserFactory
 
-
-load_dotenv()
+load_dotenv(override=False)
 
 BROWSER_TYPE = os.getenv('BROWSER_TYPE', 'chromium')
 BASE_URL = os.getenv('BASE_URL', None)
 PLATFORM = os.getenv('PLATFORM', None)
-
-
 
 
 @pytest.fixture
@@ -24,11 +21,30 @@ def test_context():
 
 
 @pytest.fixture(scope="session")
-def get_browser():
+def set_platform_context() -> dict:
+    platform = PLATFORM
+    if platform == "desktop":
+        return {"viewport": {"width": 1920, "height": 1080},
+                "maximized": True}
+    elif platform == "mobile":
+        return {"viewport": {"width": 360, "height": 800},
+                "user_agent": "Mozilla/5.0 (Linux; Android 10; SAMSUNG SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36",
+                "maximized": False
+                }
+    else:
+        raise ValueError(f"Unsupported platform: {platform}")
 
-    page = BrowserFactory.create_browser(base_url=BASE_URL, browser_type=BROWSER_TYPE, headless=False).start()
+
+@pytest.fixture(scope="session")
+def get_browser(set_platform_context):
+    context_args = set_platform_context
+    maximazed = context_args.pop("maximized")
+    browser = BrowserFactory.create_browser(base_url=BASE_URL, browser_type=BROWSER_TYPE, headless=False,
+                                            maximized=maximazed)
+    page = browser.start(**context_args)
     yield page
     page.close()
+
 
 @pytest.fixture(scope="function")
 def get_starting_page(get_browser):
