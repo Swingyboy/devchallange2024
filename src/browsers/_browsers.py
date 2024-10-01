@@ -24,7 +24,6 @@ class BaseBrowser(ABC):
         self._context = self._browser.new_context()
         self._page = self._context.new_page()
         if self._base_url:
-            self._page = MainPage(self._page)
             self._page.goto(self._base_url)
         return self._page
 

@@ -14,6 +14,11 @@ class BasePage:
         self._header = Header(self._page)
         self._footer = Footer(self._page)
 
+    def get_footer_email(self) -> str:
+        email =  self._footer.get_email()
+        email = email.split(" ")[1]
+        return email
+
     def goto(self, url: str, timeout: typing.Optional[float] = None, wait_until: typing.Optional[str] = None):
         self._page.goto(url, timeout=timeout, wait_until=wait_until)
 
