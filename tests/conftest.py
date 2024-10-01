@@ -8,10 +8,12 @@ from src.browsers import BrowserFactory
 load_dotenv(override=False)
 
 BROWSER_TYPE = os.getenv('BROWSER_TYPE', 'chromium')
+BROWSER_TYPE = BROWSER_TYPE.lower() if BROWSER_TYPE else None
 BASE_URL = os.getenv('BASE_URL', None)
 PLATFORM = os.getenv('PLATFORM', None)
-HEADLESS = os.getenv('HEADLESS', False)
-
+PLATFORM = PLATFORM.lower() if PLATFORM else None
+HEADLESS = os.getenv('HEADLESS', "FALSE")
+HEADLESS = HEADLESS.lower() in ['true', '1', 't', 'y', 'yes']
 
 @pytest.fixture
 def test_context():
